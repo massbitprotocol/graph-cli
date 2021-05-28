@@ -28,6 +28,7 @@ module.exports = class AbiCodeGenerator {
           'BigInt',
         ],
         '@graphprotocol/graph-ts',
+        '@polkadot/api',
       ),
     ]
   }

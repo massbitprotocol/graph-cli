@@ -39,18 +39,23 @@ class Compiler {
     }
 
     const globalsFile = path.join('@graphprotocol', 'graph-ts', 'global', 'global.ts')
+    console.log(globalsFile + " globalsFile")
     const globalsLib = this.libsDirs.find(item => {
+
+    console.log(item + " item")
       return fs.existsSync(path.join(item, globalsFile))
     })
-
+    console.log(globalsLib + " globalsLib")
     if (!globalsLib) {
       throw Error(
-        'Could not locate `@graphprotocol/graph-ts` package in parent directories of subgraph manifest.',
+        'Could not locate `@graphprotocol/graph-ts` package in parent directories of subgraph manifest. \n'
+        +globalsFile+'\n globalsFile',
       )
     }
 
     this.globalsFile = path.join(globalsLib, globalsFile)
 
+    console.log(globalsFile + " globalsFile2")
     process.on('uncaughtException', function(e) {
       toolbox.print.error(`UNCAUGHT EXCEPTION: ${e}`)
     })
@@ -279,7 +284,16 @@ class Compiler {
 
       let libs = this.libsDirs.join(',')
       let global = path.relative(baseDir, this.globalsFile)
-
+      console.log('inputFile:'+ inputFile)
+      console.log('----------------------')
+      console.log('global:'+ global)
+      console.log('----------------------')
+      console.log('baseDir:'+ baseDir)
+      console.log('----------------------')
+      console.log('libs:'+ libs)
+      console.log('----------------------')
+      console.log('outputFile:'+ outputFile)
+      console.log('----------------------')
       asc.main(
         [
           inputFile,
@@ -299,6 +313,8 @@ class Compiler {
         },
         e => {
           if (e != null) {
+      console.log('err:'+ e)
+      console.log('----------------------')
             throw e
           }
         },
@@ -309,6 +325,24 @@ class Compiler {
 
       return outFile
     } catch (e) {
+      // step(
+      //   spinner,
+      //   'Error:',
+      //   `${mappingPath} => ${dataSource} (dataSource) ${compiledFiles}`,
+      // )
+      // step(
+      //   spinner,
+      //   'Error:',
+      //   `${mappingPath} => ${compiledFiles} (compiledFiles)`,
+      // )
+      console.log('exception')
+      console.log('----------------------')
+      console.log('dataSource' + dataSource)
+      console.log('----------------------')
+      console.log('mappingPath' + mappingPath)
+      console.log('----------------------')
+      console.log('compiledFiles' + compiledFiles)
+      console.log('----------------------')
       throw Error(`Failed to compile data source mapping: ${e.message}`)
     }
   }
@@ -316,10 +350,10 @@ class Compiler {
   _compileTemplateMapping(template, mappingPath, compiledFiles, spinner) {
     try {
       let templateName = template.get('name')
-
       let baseDir = this.sourceDir
       let absoluteMappingPath = path.resolve(baseDir, mappingPath)
       let inputFile = path.relative(baseDir, absoluteMappingPath)
+      
 
       // If the file has already been compiled elsewhere, just use that output
       // file and return early
@@ -330,7 +364,7 @@ class Compiler {
         step(
           spinner,
           'Compile data source template:',
-          `${templateName} => ${this.displayPath(outFile)} (already compiled)`,
+          `${templateName} => ${this.displayPath(outFile)} (already compiled) \n`,
         )
         return outFile
       }

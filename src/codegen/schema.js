@@ -30,6 +30,7 @@ module.exports = class SchemaCodeGenerator {
           'BigDecimal',
         ],
         '@graphprotocol/graph-ts',
+        '@polkadot/api',
       ),
     ]
   }

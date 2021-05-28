@@ -43,6 +43,7 @@ const generatePackageJson = ({ subgraphName }) =>
       dependencies: {
         '@graphprotocol/graph-cli': `${module.exports.version}`,
         '@graphprotocol/graph-ts': `0.20.0`,
+        '@polkadot/api': `^4`,
       },
     }),
     { parser: 'json' },

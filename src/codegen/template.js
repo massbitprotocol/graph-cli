@@ -12,6 +12,7 @@ module.exports = class DataSourceTemplateCodeGenerator {
       tsCodegen.moduleImports(
         ['Address', 'DataSourceTemplate', 'DataSourceContext'],
         '@graphprotocol/graph-ts',
+        '@polkadot/api',
       ),
     ]
   }
